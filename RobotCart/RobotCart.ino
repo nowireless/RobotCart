@@ -1,7 +1,13 @@
 #include <Servo.h>
 
-const int SERVO_1 = 9;
-const int SERVO_2 = 10;
+//Define Buttons
+const int For_M1 = 8; //Rotate m1 cw
+const int Rev_M1 = 6; //Rotate m2 ccw
+const int For_M2 = 10; //Rotate m2 cw
+const int Rev_M2 = 12; //rotate m2 ccw
+
+const int SERVO_1 = 3;
+const int SERVO_2 = 5;
 
 Servo servo1;  
 Servo servo2;
@@ -10,7 +16,7 @@ Servo servo2;
 #define DEBUG
 
 //Comment out to select spark motor controller constants
-#define JAGUAR
+//#define JAGUAR
 
 #ifdef JAGUAR
 //Jagaur
@@ -60,19 +66,54 @@ void writeMotor(Servo &s, float speed) {
 void setup() {
   servo1.attach(SERVO_1);  
   servo2.attach(SERVO_2);
-  Serial.begin(9600);
-  Serial.println("Please input a floating point number from -1.00 to 1.00, with 0.0 being neutral");
+  //Serial.begin(9600);
+  //Serial.println("Please input a floating point number from -1.00 to 1.00, with 0.0 being neutral");
+  pinMode(For_M1, INPUT);
+  digitalWrite(For_M1, HIGH); // connect internal pull-up
+    pinMode(Rev_M1, INPUT);
+  digitalWrite(Rev_M1, HIGH); // connect internal pull-up
+  pinMode(For_M2, INPUT);
+  digitalWrite(For_M2, HIGH); // connect internal pull-up
+    pinMode(Rev_M2, INPUT);
+  digitalWrite(Rev_M2, HIGH); // connect internal pull-up
+  
+  
 }
 
-float i = 0;
+float m1 = 1;
+float m2 = 1;
 
 void loop() {
-  if(Serial.available()) {
-    i = Serial.parseFloat();
-  }
-  writeMotor(servo1, i);
-  writeMotor(servo2, i);
-  delay(50);
-}
+  int val1 = 0;
+  val1 = digitalRead(For_M1);
+  if (val1 == LOW){
+    writeMotor(servo1, m1);
+   } else { 
 
+int val2 = 0;
+   val2 = digitalRead(Rev_M1);
+  if (val2 == LOW){
+    writeMotor(servo1, -m1);
+   } else { writeMotor(servo1, 0);
+}
+    
+}
+   int val3 = 0;
+   val3 = digitalRead(For_M2);
+  if (val3 == LOW){
+    writeMotor(servo2, m2);
+   } 
+
+int val4 = 0;
+  val4 = digitalRead(Rev_M2);
+  if (val4 == LOW){
+    writeMotor(servo2, -m2);
+   } else { writeMotor(servo2, 0);
+}
+   
+}
+   
+ // writeMotor(servo1, m1);
+ // writeMotor(servo2, m2);
+//delay(50);
 
