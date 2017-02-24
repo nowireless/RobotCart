@@ -6,11 +6,15 @@ const int SERVO_2 = 10;
 Servo servo1;  
 Servo servo2;
 
+//Comment out to disable debug messages
 #define DEBUG
 
+//Comment out to select spark motor controller constants
 #define JAGUAR
+
 #ifdef JAGUAR
 //Jagaur
+//https://github.com/wpilibsuite/allwpilib/blob/ed1a94531a6aa14617b74bc5139817c0529faf54/wpilibc/athena/src/Jaguar.cpp
 const float MIN_REVERSE = 1448.0;
 const float FULL_REVERSE = 685.0;
 const float MIN_FORWARD = 1552.0;
@@ -18,20 +22,20 @@ const float MAX_FORWARD = 2302.0;
 const float NEUTRAL = 1450;
 #else
 //Spark constants
-//TODO, find constants from WPI lib
-const float MIN_REVERSE = 1448.0;
-const float FULL_REVERSE = 685.0;
-const float MIN_FORWARD = 1552.0;
-const float MAX_FORARD = 2302.0;
-const float NEUTRAL = 1450;
-
+//TODO, need to tune the following constants
+//https://github.com/wpilibsuite/allwpilib/blob/ed1a94531a6aa14617b74bc5139817c0529faf54/wpilibc/athena/src/Spark.cpp
+const float MIN_REVERSE = 1460.0;
+const float FULL_REVERSE = 999.0;
+const float MIN_FORWARD = 1550.0;
+const float MAX_FORWARD = 2003;
+const float NEUTRAL = 1500;
 #endif
 
 
 void writeMotor(Servo &s, float speed) {
   if(speed > 0.001) {
      //Forward
-    int out = (MAX_FORARD-MIN_FORWARD)*speed+MIN_FORWARD;
+    int out = (MAX_FORWARD-MIN_FORWARD)*speed+MIN_FORWARD;
     s.writeMicroseconds(out);
 
 #ifdef DEBUG
