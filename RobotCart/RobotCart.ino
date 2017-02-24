@@ -64,56 +64,48 @@ void writeMotor(Servo &s, float speed) {
 }
 
 void setup() {
-  servo1.attach(SERVO_1);  
-  servo2.attach(SERVO_2);
-  //Serial.begin(9600);
-  //Serial.println("Please input a floating point number from -1.00 to 1.00, with 0.0 being neutral");
-  pinMode(For_M1, INPUT);
-  digitalWrite(For_M1, HIGH); // connect internal pull-up
-    pinMode(Rev_M1, INPUT);
-  digitalWrite(Rev_M1, HIGH); // connect internal pull-up
-  pinMode(For_M2, INPUT);
-  digitalWrite(For_M2, HIGH); // connect internal pull-up
-    pinMode(Rev_M2, INPUT);
-  digitalWrite(Rev_M2, HIGH); // connect internal pull-up
-  
-  
+	servo1.attach(SERVO_1);  
+	servo2.attach(SERVO_2);
+
+	pinMode(For_M1, INPUT);
+	digitalWrite(For_M1, HIGH); // connect internal pull-up
+
+	pinMode(Rev_M1, INPUT);
+	digitalWrite(Rev_M1, HIGH); // connect internal pull-up
+
+	pinMode(For_M2, INPUT);
+	digitalWrite(For_M2, HIGH); // connect internal pull-up
+
+	pinMode(Rev_M2, INPUT);
+	digitalWrite(Rev_M2, HIGH); // connect internal pull-up
 }
 
 float m1 = 1;
 float m2 = 1;
 
 void loop() {
-  int val1 = 0;
-  val1 = digitalRead(For_M1);
-  if (val1 == LOW){
-    writeMotor(servo1, m1);
-   } else { 
+	int fM1State = digitalRead(For_M1);
+	if (fM1State == LOW){
+		writeMotor(servo1, m1);
+	} else { 
+		int rM1State = digitalRead(Rev_M1);
+		if (rM1State == LOW){
+			writeMotor(servo1, -m1);
+		} else { 
+			writeMotor(servo1, 0);
+		}
+	}
+	
+	int fM2State = digitalRead(For_M2);
+	if (fM2State == LOW){
+		writeMotor(servo2, m2);
+	} 
 
-int val2 = 0;
-   val2 = digitalRead(Rev_M1);
-  if (val2 == LOW){
-    writeMotor(servo1, -m1);
-   } else { writeMotor(servo1, 0);
+	int rM2State = digitalRead(Rev_M2);
+	if (rM2State == LOW){
+		writeMotor(servo2, -m2);
+	} else {
+		writeMotor(servo2, 0);
+	}
 }
-    
-}
-   int val3 = 0;
-   val3 = digitalRead(For_M2);
-  if (val3 == LOW){
-    writeMotor(servo2, m2);
-   } 
-
-int val4 = 0;
-  val4 = digitalRead(Rev_M2);
-  if (val4 == LOW){
-    writeMotor(servo2, -m2);
-   } else { writeMotor(servo2, 0);
-}
-   
-}
-   
- // writeMotor(servo1, m1);
- // writeMotor(servo2, m2);
-//delay(50);
 
