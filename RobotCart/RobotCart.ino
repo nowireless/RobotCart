@@ -99,14 +99,13 @@ void loop() {
 	int fM2State = digitalRead(For_M2);
 	if (fM2State == LOW){
 		writeMotor(servo2, m2);
-	} Else {
-
-	int rM2State = digitalRead(Rev_M2);
-	if (rM2State == LOW){
-		writeMotor(servo2, -m2);
 	} else {
-		writeMotor(servo2, 0);
-	}
+		int rM2State = digitalRead(Rev_M2);
+		if (rM2State == LOW){
+			writeMotor(servo2, -m2);
+		} else {
+			writeMotor(servo2, 0);
+		}
 	}
 }
 
