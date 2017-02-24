@@ -14,7 +14,7 @@ Servo servo2;
 const float MIN_REVERSE = 1448.0;
 const float FULL_REVERSE = 685.0;
 const float MIN_FORWARD = 1552.0;
-const float MAX_FORARD = 2302.0;
+const float MAX_FORWARD = 2302.0;
 const float NEUTRAL = 1450;
 #else
 //Spark constants
